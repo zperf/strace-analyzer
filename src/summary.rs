@@ -23,11 +23,12 @@
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-use bytesize::ByteSize;
 use std::collections::HashMap;
 
+use bytesize::ByteSize;
+
 #[cfg(feature = "table")]
-use prettytable::{cell, format::FormatBuilder, Row, Table};
+use prettytable::{Row, Table, cell, format::FormatBuilder};
 
 use crate::config::Config;
 use crate::log::debug;
@@ -140,11 +141,7 @@ impl Summary {
 }
 
 fn humanize(bytes: u64) -> String {
-    ByteSize(bytes)
-        .to_string_as(true)
-        .replace("iB", "")
-        .replace(' ', "")
-        .to_uppercase()
+    ByteSize(bytes).display().iec_short().to_string()
 }
 
 #[cfg(feature = "table")]
